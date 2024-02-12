@@ -5,4 +5,5 @@ export default defineConfig({
     open: "/index.html",
   },
   root: "src",
+  base: "/vttchapters/"
 });
