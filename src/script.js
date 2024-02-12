@@ -10,7 +10,57 @@ function secondsToTimestamp(startTime) {
   return hours + ':' + minutes + ':' + seconds + '.' + milliseconds;
 }
 
-function generateVTT() {
+function generateVTT(fileContents) {
+  var payload = document.querySelector('input[name="payload"]:checked').id;
+  var json = JSON.parse(fileContents);
+  var chapters = json.chapters;
+
+  if (payload === "chapters") {
+    chapters = chapters.filter(function(chapter) {
+      return chapter.toc !== false;
+    });
+  }
+
+  for (var i = 0; i < chapters.length; i++) {
+    var start = chapters[i].startTime;
+    var end = chapters[i].endTime || (chapters[i + 1] ? chapters[i + 1].startTime : start + 10);
+    var timestamp = secondsToTimestamp(start) + ' --> ' + secondsToTimestamp(end);
+    chapters[i].timestamp = timestamp;
+    delete chapters[i].startTime;
+    delete chapters[i].endTime;
+  }
+
+  var output = document.getElementById('output');
+  output.textContent = 'WEBVTT\n\n';
+
+  // if any chapter with toc==false was removed, add a note to the output
+  if (json.chapters.length !== chapters.length) {
+    output.textContent += 'NOTE\nThis file has been modified to remove chapters with "toc": false\n\n';
+  }
+  
+
+  for (var i = 0; i < chapters.length; i++) {
+    output.textContent += (i + 1) + '\n' + chapters[i].timestamp + '\n';
+
+    if (payload === "metadata") {
+      var chapter = JSON.parse(JSON.stringify(chapters[i]));
+      delete chapter.timestamp;
+      output.textContent += JSON.stringify(chapter,null,2) + '\n\n';
+    }
+    else if (payload === "chapters") {
+      output.textContent += chapters[i].title + '\n\n';
+    }
+  }
+
+  var blob = new Blob([output.textContent], {type: 'text/vtt;charset=utf-8'});
+  var url = URL.createObjectURL(blob);
+  var a = document.getElementById('download');
+  a.href = url;
+  a.download = `${payload}.vtt`;
+  a.textContent = `Download ${payload}.vtt`;
+}
+
+function processInput() {
   // get value of selected payload radio button
   var payload = document.querySelector('input[name="payload"]:checked').id;
   if (document.getElementById('dropzone-file').files.length === 0) {
@@ -20,71 +70,55 @@ function generateVTT() {
   var file = document.getElementById('dropzone-file').files[0];
   var reader = new FileReader();
   reader.onload = function(progressEvent) {
-    var json = JSON.parse(this.result);
-    var chapters = json.chapters;
-
-    if (payload === "chapters") {
-      chapters = chapters.filter(function(chapter) {
-        return chapter.toc !== false;
-      });
-
-      // If a toc==false chapter is the first chapter, we need to add a dummy chapter at the beginning
-      if (json.chapters[0].toc === false) {
-        chapters.unshift({
-          title: 'Start',
-          startTime: 0,
-        });
-      }
-    }
-
-    for (var i = 0; i < chapters.length; i++) {
-      var start = chapters[i].startTime;
-      var end = chapters[i].endTime || (chapters[i + 1] ? chapters[i + 1].startTime : start + 10);
-      var timestamp = secondsToTimestamp(start) + ' --> ' + secondsToTimestamp(end);
-      chapters[i].timestamp = timestamp;
-      delete chapters[i].startTime;
-      delete chapters[i].endTime;
-    }
-
-    var output = document.getElementById('output');
-    output.textContent = 'WEBVTT\n\n';
-
-    // if any chapter with toc==false was removed, add a note to the output
-    if (json.chapters.length !== chapters.length) {
-      output.textContent += 'NOTE\nThis file has been modified to remove chapters with "toc": false\n\n';
-    }
-    
-
-    for (var i = 0; i < chapters.length; i++) {
-      output.textContent += (i + 1) + '\n' + chapters[i].timestamp + '\n';
-
-      if (payload === "metadata") {
-        var chapter = JSON.parse(JSON.stringify(chapters[i]));
-        delete chapter.timestamp;
-        output.textContent += JSON.stringify(chapter,null,2) + '\n\n';
-      }
-      else if (payload === "chapters") {
-        output.textContent += chapters[i].title + '\n\n';
-      }
-    }
-
-    var blob = new Blob([output.textContent], {type: 'text/vtt;charset=utf-8'});
-    var url = URL.createObjectURL(blob);
-    var a = document.getElementById('download');
-    a.href = url;
-    a.download = `${payload}.vtt`;
-    a.textContent = `Download ${payload}.vtt`;
+    generateVTT(this.result, payload);
   };
   reader.readAsText(file);
 }
 
+function requestURL(remoteURL){
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', remoteURL, true);
+  xhr.responseType = 'blob';
+  xhr.onload = function() {
+    if (this.status === 200) {
+      // pass filecontents to generateVTT
+      var reader = new FileReader();
+      reader.onload = function(progressEvent) {
+        generateVTT(this.result);
+      };
+      reader.readAsText(this.response);
+    }
+  };
+  xhr.send();
+}
+
+var urlParams = new URLSearchParams(window.location.search);
+var payload = urlParams.get('payload');
+var url = urlParams.get('url');
+
+if (payload) {
+  document.getElementById(payload).checked = true;
+}
+
+if (url) {
+  document.getElementById('uploader').style.display = 'none';
+  document.querySelector('a[href="/"').classList.add('underline');
+  requestURL(url);
+}
+
 document.getElementById('dropzone-file').onchange = function() {
-  generateVTT();
+  processInput();
 };
 
 // Listen for changes to the payload radio buttons
 document.querySelectorAll('input[name="payload"]').forEach(function(radio) {
   radio.addEventListener('change', function() {
-    generateVTT();
+    // check if any upload or url or nothing is selected
+    if (url) {
+      requestURL(url);
+    }
+    else if (document.getElementById('dropzone-file').files.length > 0) {
+      processInput();
+    } 
   });
 });
