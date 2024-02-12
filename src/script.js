@@ -102,7 +102,7 @@ if (payload) {
 
 if (url) {
   document.getElementById('uploader').style.display = 'none';
-  document.querySelector('a[href="/"').classList.add('underline');
+  document.getElementById('home').classList.add('underline');
   requestURL(url);
 }
 
