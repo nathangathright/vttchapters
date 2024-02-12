@@ -5,12 +5,12 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📖</text></svg>">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="./style.css" />
-  <title>VTT Chapters</title>
+  <title>VTT Podcast Chapters</title>
 </head>
 <body
   class="font-inter text-base font-normal bg-slate-200 p-4 m-0 flex flex-col place-content-center place-items-center min-h-screen">
     <form class="w-full max-w-3xl flex flex-col">
-      <h1 class="mt-3 text-3xl text-center font-extrabold tracking-tight text-slate-900">VTT Chapters</h1>
+      <h1 class="mt-3 text-3xl text-center font-extrabold tracking-tight text-slate-900">VTT Podcast Chapters</h1>
       <p class="text-lg text-gray-700 text-center"><a id="home" href="/vttchapters">Upload a JSON file</a> or <a class="underline" href="/vttchapters?payload=chapters&url=https://raw.githubusercontent.com/Podcastindex-org/podcast-namespace/main/chapters/example.json">see an example</a></p>
       <div id="uploader" class="mt-2 flex items-center justify-center w-full">
         <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-40 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
@@ -24,7 +24,7 @@
         </label>
       </div>
       <div class="mt-6 w-full text-center">
-        <label class="text-sm font-medium text-gray-900">Select a type of <a href="https://www.w3.org/TR/webvtt1/#types-of-webvtt-cue-payload" class="underline">WebVTT payload</a></label>
+        <label class="text-sm font-medium text-gray-900">Select a payload type</a></label>
         <fieldset class="mt-2">
           <legend class="sr-only">Payload</legend>
           <div class="space-x-4 flex justify-center">
