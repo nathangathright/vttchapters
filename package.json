@@ -1,20 +1,17 @@
 {
   "name": "vttchapters",
-  "description": "Converting JSON chapters to VTT chapters",
+  "description": "Converting JSON chapters to WevVTT",
   "version": "0.0.1",
   "homepage": "https://nathangathright.github.io/vttchapters/",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview",
-    "predeploy" : "npm run build",
-    "deploy" : "gh-pages -d dist"
+    "preview": "vite preview"
   },
   "devDependencies": {
     "@tailwindcss/forms": "^0.5.3",
     "@tailwindcss/typography": "^0.5.9",
     "autoprefixer": "^10.4.13",
-    "gh-pages": "^6.1.1",
     "postcss": "^8.4.21",
     "tailwindcss": "^3.2.4",
     "vite": "^4.1.1"
