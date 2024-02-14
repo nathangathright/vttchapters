@@ -37,7 +37,7 @@ function generateVTT(fileContents) {
   if (json.chapters.length !== chapters.length) {
     output.textContent += 'NOTE\nThis file has been modified to remove chapters with "toc": false\n\n';
   }
-  
+
   for (var i = 0; i < chapters.length; i++) {
     output.textContent += (i + 1) + '\n' + chapters[i].timestamp + '\n';
 
@@ -64,7 +64,7 @@ function processUpload() {
     return;
   }
 
-  var file = document.getElementById('dropzone-file').files[0] 
+  var file = document.getElementById('dropzone-file').files[0]
   var reader = new FileReader();
   reader.onload = function(progressEvent) {
     generateVTT(this.result);
@@ -113,7 +113,7 @@ document.querySelectorAll('input[name="payload"]').forEach(function(radio) {
     }
     else if (document.getElementById('dropzone-file').files.length > 0) {
       processUpload();
-    } 
+    }
   });
 });
 
@@ -144,4 +144,5 @@ dropzone.addEventListener('drop', function(event) {
     generateVTT(this.result);
   }
   reader.readAsText(file)
+  document.getElementById('dropzone-file').files = event.dataTransfer.files;
 }, false);
