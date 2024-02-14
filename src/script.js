@@ -38,7 +38,6 @@ function generateVTT(fileContents) {
     output.textContent += 'NOTE\nThis file has been modified to remove chapters with "toc": false\n\n';
   }
   
-
   for (var i = 0; i < chapters.length; i++) {
     output.textContent += (i + 1) + '\n' + chapters[i].timestamp + '\n';
 
@@ -60,17 +59,15 @@ function generateVTT(fileContents) {
   a.textContent = `Download ${payload}.vtt`;
 }
 
-function processInput() {
-  // get value of selected payload radio button
-  var payload = document.querySelector('input[name="payload"]:checked').id;
+function processUpload() {
   if (document.getElementById('dropzone-file').files.length === 0) {
     return;
   }
 
-  var file = document.getElementById('dropzone-file').files[0];
+  var file = document.getElementById('dropzone-file').files[0] 
   var reader = new FileReader();
   reader.onload = function(progressEvent) {
-    generateVTT(this.result, payload);
+    generateVTT(this.result);
   };
   reader.readAsText(file);
 }
@@ -81,7 +78,6 @@ function requestURL(remoteURL){
   xhr.responseType = 'blob';
   xhr.onload = function() {
     if (this.status === 200) {
-      // pass filecontents to generateVTT
       var reader = new FileReader();
       reader.onload = function(progressEvent) {
         generateVTT(this.result);
@@ -101,24 +97,51 @@ if (payload) {
 }
 
 if (url) {
-  document.getElementById('uploader').style.display = 'none';
+  document.getElementById('dropzone').style.display = 'none';
   document.getElementById('home').classList.add('underline');
   requestURL(url);
 }
 
 document.getElementById('dropzone-file').onchange = function() {
-  processInput();
+  processUpload();
 };
 
-// Listen for changes to the payload radio buttons
 document.querySelectorAll('input[name="payload"]').forEach(function(radio) {
   radio.addEventListener('change', function() {
-    // check if any upload or url or nothing is selected
     if (url) {
       requestURL(url);
     }
     else if (document.getElementById('dropzone-file').files.length > 0) {
-      processInput();
+      processUpload();
     } 
   });
 });
+
+let dropzone = document.getElementById('dropzone');
+
+['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+  dropzone.addEventListener(eventName, function(event){
+    event.preventDefault()
+    event.stopPropagation()
+  }, false)
+});
+
+['dragenter', 'dragover'].forEach(eventName => {
+  dropzone.addEventListener(eventName, dropzone.classList.add('highlight'), false)
+});
+
+['dragleave', 'drop'].forEach(eventName => {
+  dropzone.addEventListener(eventName, dropzone.classList.remove('highlight'), false)
+});
+
+dropzone.addEventListener('drop', function(event) {
+  document.getElementById('dropzone').style.display = 'none';
+  document.getElementById('home').classList.add('underline');
+
+  let file = event.dataTransfer.files[0]
+  let reader = new FileReader()
+  reader.onload = function(progressEvent) {
+    generateVTT(this.result);
+  }
+  reader.readAsText(file)
+}, false);
