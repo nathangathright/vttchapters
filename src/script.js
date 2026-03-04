@@ -127,11 +127,15 @@ let dropzone = document.getElementById('dropzone');
 });
 
 ['dragenter', 'dragover'].forEach(eventName => {
-  dropzone.addEventListener(eventName, dropzone.classList.add('highlight'), false)
+  dropzone.addEventListener(eventName, function() {
+    dropzone.classList.add('highlight');
+  }, false)
 });
 
 ['dragleave', 'drop'].forEach(eventName => {
-  dropzone.addEventListener(eventName, dropzone.classList.remove('highlight'), false)
+  dropzone.addEventListener(eventName, function() {
+    dropzone.classList.remove('highlight');
+  }, false)
 });
 
 dropzone.addEventListener('drop', function(event) {
