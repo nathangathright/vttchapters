@@ -1,0 +1,114 @@
+---
+import {
+  ChevronLeft,
+  ChevronRight,
+  ExternalLink,
+  Pause,
+  Play,
+  SkipBack,
+  SkipForward,
+} from "@lucide/astro";
+import "../styles/global.css";
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VTT Chapters Now Playing Demo</title>
+    <meta
+      name="description"
+      content="Astro demo of a podcast app now playing page powered by WebVTT chapter and metadata tracks."
+    />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>◎</text></svg>"
+    />
+  </head>
+  <body>
+    <main class="page-shell">
+      <section class="now-playing-shell">
+        <h1 class="sr-only">VTT Chapters Now Playing Demo</h1>
+
+        <div class="artwork-frame">
+          <img id="episode-art" src="" alt="Current chapter artwork" />
+          <a
+            id="active-link"
+            class="artwork-link is-hidden"
+            href="#"
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Open chapter link"
+          >
+            <ExternalLink class="artwork-link-icon" aria-hidden="true" />
+          </a>
+        </div>
+
+        <section class="chapter-switcher" aria-live="polite">
+          <button
+            id="prev-chapter"
+            class="chapter-arrow"
+            type="button"
+            aria-label="Previous chapter"
+          >
+            <ChevronLeft class="button-icon" aria-hidden="true" />
+          </button>
+
+          <div class="chapter-center">
+            <button
+              id="toc-trigger"
+              class="chapter-title-link"
+              type="button"
+              aria-haspopup="dialog"
+              aria-controls="toc-dialog"
+            >
+              <h2 id="active-title" class="chapter-title">Loading cue data...</h2>
+              <span id="chapter-position" class="chapter-position">1 of 3</span>
+            </button>
+          </div>
+
+          <button
+            id="next-chapter"
+            class="chapter-arrow"
+            type="button"
+            aria-label="Next chapter"
+          >
+            <ChevronRight class="button-icon" aria-hidden="true" />
+          </button>
+        </section>
+
+        <audio id="player" aria-label="Podcast audio player" controls preload="metadata"></audio>
+
+        <div class="transport-row">
+          <button id="skip-backward" class="transport-button" type="button" aria-label="Skip backward 15 seconds">
+            <SkipBack class="transport-icon" aria-hidden="true" />
+          </button>
+          <button id="toggle-play" class="transport-button transport-button--primary" type="button" aria-label="Play">
+            <Play id="play-icon" class="transport-icon" aria-hidden="true" />
+            <Pause id="pause-icon" class="transport-icon is-hidden" aria-hidden="true" />
+          </button>
+          <button id="skip-forward" class="transport-button" type="button" aria-label="Skip forward 30 seconds">
+            <SkipForward class="transport-icon" aria-hidden="true" />
+          </button>
+        </div>
+
+        <dialog id="toc-dialog" class="toc-dialog" aria-labelledby="toc-heading">
+          <div class="toc-card">
+            <div class="toc-header">
+              <h2 id="toc-heading" class="toc-heading">Table of contents</h2>
+              <button id="close-toc" class="toc-close" type="button">Close</button>
+            </div>
+            <ul id="toc-list" class="toc-list"></ul>
+          </div>
+        </dialog>
+      </section>
+    </main>
+
+    <script>
+      import initNowPlaying from "../scripts/now-playing.js";
+
+      initNowPlaying();
+    </script>
+  </body>
+</html>

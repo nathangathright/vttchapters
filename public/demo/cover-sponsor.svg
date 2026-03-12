@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1200" role="img" aria-labelledby="title desc">
+  <title id="title">Sponsor Mention cover art</title>
+  <desc id="desc">Golden sponsor segment artwork that is hidden from the table of contents.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#291a06" />
+      <stop offset="100%" stop-color="#f0ad2c" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="1200" fill="url(#bg)" />
+  <rect x="168" y="164" width="864" height="864" rx="52" fill="none" stroke="#fff0c5" stroke-width="16" opacity="0.9" />
+  <text x="600" y="440" fill="#fff7df" font-family="Arial, sans-serif" font-size="40" text-anchor="middle" letter-spacing="10">HIDDEN FROM TOC</text>
+  <text x="600" y="630" fill="#fff8ee" font-family="Georgia, serif" font-size="126" text-anchor="middle">Sponsor Mention</text>
+  <text x="600" y="730" fill="#fff1c4" font-family="Arial, sans-serif" font-size="38" text-anchor="middle" letter-spacing="8">METADATA STILL UPDATES THE PLAYER</text>
+</svg>

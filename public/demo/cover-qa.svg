@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1200" role="img" aria-labelledby="title desc">
+  <title id="title">Listener Q and A cover art</title>
+  <desc id="desc">Deep indigo artwork for the closing listener questions segment.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1c1237" />
+      <stop offset="100%" stop-color="#6151d8" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="1200" fill="url(#bg)" />
+  <circle cx="286" cy="286" r="128" fill="#b9b2ff" opacity="0.25" />
+  <circle cx="962" cy="924" r="166" fill="#d8d4ff" opacity="0.22" />
+  <text x="84" y="930" fill="#faf9ff" font-family="Georgia, serif" font-size="126">Listener Q&amp;A</text>
+  <text x="88" y="1018" fill="#d9d6ff" font-family="Arial, sans-serif" font-size="42" letter-spacing="8">DEEP LINKS, ARTWORK, AND STATE SYNC</text>
+</svg>

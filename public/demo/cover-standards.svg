@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1200" role="img" aria-labelledby="title desc">
+  <title id="title">Standards Update cover art</title>
+  <desc id="desc">Cool blue chapter artwork for the standards update segment.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#12273a" />
+      <stop offset="100%" stop-color="#3f88c5" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="1200" fill="url(#bg)" />
+  <path d="M120 770 C360 580, 620 930, 1080 530" fill="none" stroke="#f0f6ff" stroke-width="18" stroke-linecap="round" opacity="0.95" />
+  <path d="M120 860 C380 660, 690 1040, 1080 680" fill="none" stroke="#a7d8ff" stroke-width="8" stroke-linecap="round" opacity="0.75" />
+  <text x="84" y="934" fill="#f4f9ff" font-family="Georgia, serif" font-size="120">Standards Update</text>
+  <text x="88" y="1020" fill="#cfe8ff" font-family="Arial, sans-serif" font-size="42" letter-spacing="7">CHAPTERS PLUS METADATA</text>
+</svg>

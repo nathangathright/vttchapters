@@ -1,18 +1,15 @@
 {
   "name": "vttchapters",
-  "description": "Converting JSON chapters to WebVTT",
+  "description": "Astro demo of a VTT chapters-powered podcast now playing page",
   "version": "0.0.1",
   "homepage": "https://nathangathright.github.io/vttchapters/",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
   },
-  "devDependencies": {
-    "@tailwindcss/forms": "^0.5.11",
-    "@tailwindcss/typography": "^0.5.19",
-    "@tailwindcss/vite": "^4.2.1",
-    "tailwindcss": "^4.2.1",
-    "vite": "^6.4.1"
+  "dependencies": {
+    "@lucide/astro": "^0.577.0",
+    "astro": "^6.0.3"
   }
 }
